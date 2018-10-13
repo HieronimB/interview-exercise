@@ -52,7 +52,7 @@ public class CsvConverter {
             return Stream.of(node.asText());
         }
 
-        return flattenJson(jsonNode);
+        return flattenJson(node);
     }
 
     private Stream<JsonNode> convertToStream(JsonNode jsonNode) {

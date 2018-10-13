@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -19,7 +20,7 @@ class CsvConverterTest {
 
         String csv = csvConverter.convert(jsonNodes, null);
 
-        assertThat(csv).contains("bar,baz");
+        assertThat(csv).isEqualTo("bar,baz");
     }
 
     @Test
@@ -29,22 +30,33 @@ class CsvConverterTest {
 
         String csv = csvConverter.convert(jsonNodes, format);
 
-        assertThat(csv).contains("bas,bar");
+        assertThat(csv).isEqualTo("bas,bar");
     }
 
     @Test
     void should_convertJsonNodeToCsvWithNestedObjects() throws IOException {
-        List<JsonNode> jsonNodes = createTestJsonList("{ \"foo\": \"bar\", \"fuz\": {\"baz\": \"bazz\", \"fus\":\"bas\"}}");
+        List<JsonNode> jsonNodes = createTestJsonList("{ \"foo\": \"bar\", \"fuu\": \"buu\",\"fuz\": {\"baz\": \"bazz\", \"fus\":\"bas\"}}");
         List<String> format = Arrays.asList("fuz","foo");
 
         String csv = csvConverter.convert(jsonNodes, format);
 
-        assertThat(csv).contains("bazz,bas,bar");
+        assertThat(csv).isEqualTo("bazz,bas,bar");
+    }
+
+    @Test
+    void should_convertJsonNodeToCsvFromListWithMultipleJsonNodes() throws IOException {
+        List<JsonNode> jsonNodes = Arrays.asList(createJsonNode("{ \"foo\": \"bar\", \"fuz\":\"baz\"}"),
+                createJsonNode("{ \"foo\": \"bar\", \"fuz\":\"baz\"}"),
+                createJsonNode("{ \"foo\": \"bar\", \"fuz\":\"baz\"}"));
+
+        String csv = csvConverter.convert(jsonNodes, null);
+
+        assertThat(csv).isEqualTo("bar,baz\nbar,baz\nbar,baz");
     }
 
     private List<JsonNode> createTestJsonList(String s) throws IOException {
         JsonNode jsonNode = createJsonNode(s);
-        return Arrays.asList(jsonNode, jsonNode, jsonNode);
+        return Collections.singletonList(jsonNode);
     }
 
     private JsonNode createJsonNode(String json) throws IOException {
