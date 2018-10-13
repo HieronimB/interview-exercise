@@ -11,7 +11,6 @@ import java.io.IOException;
 public class JsonParser {
     public JsonNode parse(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         try {
             return objectMapper.readTree(json);
         } catch (IOException e) {

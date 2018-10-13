@@ -11,10 +11,10 @@ class JsonParserTest {
 
     @Test
     void should_parseValidJsonString() {
-        JsonNode json = jsonParser.parse("{ _type: \"Position\", _id: 65483214, key: null, name: \"Oksywska\", " +
-                "fullName: \"Oksywska,Poland\", iata_airport_code: null, type: \"location\", country: \"Poland\", " +
-                "geo_position:{ latitude: 51.0855422, longitude: 16.9987442 }, location_id: 756423, inEurope: true,\n" +
-                "countryCode: \"PL\", coreCountry: true, distance: null }");
+        JsonNode json = jsonParser.parse("{ \"_type\": \"Position\", \"_id\": 65483214, \"key\": null, \"name\": \"Oksywska\", " +
+                "\"fullName\": \"Oksywska,Poland\", \"iata_airport_code\": null, \"type\": \"location\", \"country\": \"Poland\", " +
+                "\"geo_position\":{ \"latitude\": 51.0855422, \"longitude\": 16.9987442 }, \"location_id\": 756423, \"inEurope\": true,\n" +
+                "\"countryCode\": \"PL\", \"coreCountry\": true, \"distance\": null }");
 
         assertThat(json).isNotNull();
     }
