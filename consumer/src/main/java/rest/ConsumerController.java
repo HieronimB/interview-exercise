@@ -21,10 +21,16 @@ public class ConsumerController {
         this.consumerService = consumerService;
     }
 
-    @GetMapping(value = "/csv", produces = "application/octet-stream")
-    public String getCsv(@RequestParam("numberOfLines") int numberOfLines,
-                         @RequestParam(value = "format", required = false)List<String> format) {
+    @GetMapping(value = "/csv", produces = "application/octet-stream", params = "format")
+    public String getCsvWithFormatting(@RequestParam("numberOfLines") int numberOfLines,
+                                       @RequestParam(value = "format")List<String> format) {
         List<JsonNode> jsonData = consumerService.getJsonData(numberOfLines);
         return csvConverter.convert(jsonData, format);
+    }
+
+    @GetMapping(value = "/csv", produces = "application/octet-stream")
+    public String getCsv(@RequestParam("numberOfLines") int numberOfLines) {
+        List<JsonNode> jsonData = consumerService.getJsonData(numberOfLines);
+        return csvConverter.convert(jsonData);
     }
 }

@@ -13,16 +13,15 @@ import java.util.stream.StreamSupport;
 @Component
 public class CsvConverter {
     public String convert(List<JsonNode> jsonData, List<String> format) {
-        Stream<Stream<String>> csvStream;
-        if (format != null && format.size() > 0) {
-            csvStream = jsonData.stream()
-                    .map(node -> convert(node, format));
-        } else {
-            csvStream = jsonData.stream()
-                    .map(this::flattenJson);
-        }
+        return jsonData.stream()
+                .map(node -> convert(node, format))
+                .map(s -> s.collect(Collectors.joining(",")))
+                .collect(Collectors.joining("\n"));
+    }
 
-        return csvStream
+    public String convert(List<JsonNode> jsonData) {
+        return jsonData.stream()
+                .map(this::flattenJson)
                 .map(s -> s.collect(Collectors.joining(",")))
                 .collect(Collectors.joining("\n"));
     }
