@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 public class CsvConverter {
     public String convert(List<JsonNode> jsonData, List<String> format) {
         return jsonData.stream()
-                .map(node -> convert(node, format))
+                .map(node -> extractFieldsUsingFormatter(node, format))
                 .map(s -> s.collect(Collectors.joining(",")))
                 .collect(Collectors.joining("\n"));
     }
@@ -36,12 +36,12 @@ public class CsvConverter {
         return jsonNodeStream.flatMap(this::flattenJson);
     }
 
-    private Stream<String> convert(JsonNode jsonNode, List<String> format) {
+    private Stream<String> extractFieldsUsingFormatter(JsonNode jsonNode, List<String> format) {
         return format.stream()
-                .flatMap(f -> convert(jsonNode, f));
+                .flatMap(f -> extractField(jsonNode, f));
     }
 
-    private Stream<String> convert(JsonNode jsonNode, String fieldName) {
+    private Stream<String> extractField(JsonNode jsonNode, String fieldName) {
         JsonNode node = jsonNode.findValue(fieldName);
         if (node == null) {
             return Stream.empty();
