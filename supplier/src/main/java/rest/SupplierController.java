@@ -18,7 +18,7 @@ public class SupplierController {
     private DataSource<String> dataSource;
     private JsonParser jsonParser;
 
-    @Autowired
+    @Autowired // Zbędne, Spring tak czy inaczej wybierze ten konstruktor
     public SupplierController(JsonDataSource dataSource, JsonParser jsonParser) {
         this.dataSource = dataSource;
         this.jsonParser = jsonParser;
@@ -27,6 +27,6 @@ public class SupplierController {
     @GetMapping("/generate/json/{size}")
     public List<JsonNode> generateJson(@PathVariable int size) {
         Collection<String> jsonResult = dataSource.fetch(size);
-        return jsonResult.stream().map(jsonParser::parse).collect(Collectors.toList());
+        return jsonResult.stream().map(jsonParser::parse).collect(Collectors.toList()); // Parsowanie JSONa i znowu sklejanie go to okrężna droga
     }
 }

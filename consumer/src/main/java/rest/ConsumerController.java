@@ -15,20 +15,20 @@ public class ConsumerController {
     private CsvConverter csvConverter;
     private ConsumerService consumerService;
 
-    @Autowired
+    @Autowired // Zbędne, Spring tak czy inaczej wybierze ten konstruktor
     public ConsumerController(CsvConverter csvConverter, ConsumerService consumerService) {
         this.csvConverter = csvConverter;
         this.consumerService = consumerService;
     }
 
-    @GetMapping(value = "/csv", produces = "application/octet-stream", params = "format")
+    @GetMapping(value = "/csv", produces = "application/octet-stream", params = "format") // Można użyć stałej, tzn. MediaType.APPLICATION_OCTET_STREAM_VALUE
     public String getCsvWithFormatting(@RequestParam("numberOfLines") int numberOfLines,
-                                       @RequestParam(value = "format")List<String> format) {
+                                       @RequestParam(value = "format")List<String> format) { // Brakuje spacji przed listą
         List<JsonNode> jsonData = consumerService.getJsonData(numberOfLines);
         return csvConverter.convert(jsonData, format);
     }
 
-    @GetMapping(value = "/csv", produces = "application/octet-stream")
+    @GetMapping(value = "/csv", produces = "application/octet-stream") // Można użyć stałej, tzn. MediaType.APPLICATION_OCTET_STREAM_VALUE
     public String getCsv(@RequestParam("numberOfLines") int numberOfLines) {
         List<JsonNode> jsonData = consumerService.getJsonData(numberOfLines);
         return csvConverter.convert(jsonData);

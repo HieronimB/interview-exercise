@@ -22,7 +22,7 @@ public class CsvConverter {
     public String convert(List<JsonNode> jsonData) {
         return jsonData.stream()
                 .map(this::flattenJson)
-                .map(s -> s.collect(Collectors.joining(",")))
+                .map(s -> s.collect(Collectors.joining(","))) // Kod tworzący CSV duplikuje się
                 .collect(Collectors.joining("\n"));
     }
 

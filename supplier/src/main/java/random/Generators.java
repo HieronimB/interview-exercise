@@ -2,6 +2,7 @@ package random;
 
 import java.util.Random;
 
+// Tu wszystko powinno być final
 public class Generators {
     private static String[] RANDOM_STRINGS = {"Position", "John Doe", "Foo", "Bar"};
     private static String[] RANDOM_COUNTRY_CODE = {"PL", "US", "SI", "RR", "KP"};

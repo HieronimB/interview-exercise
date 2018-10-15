@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 public class JsonDataSource implements DataSource<String> {
     private RandomGenerator randomGenerator;
 
-    @Autowired
+    @Autowired // Zbędne, Spring tak czy inaczej wybierze ten konstruktor
     public JsonDataSource(RandomGenerator randomGenerator) {
         this.randomGenerator = randomGenerator;
     }
@@ -25,6 +25,7 @@ public class JsonDataSource implements DataSource<String> {
                 .collect(Collectors.toList());
     }
 
+    // To, co z tego wyjdzie, nie wygląda na długość i szerokość geograficzną z przykładu
     private String fetchJson() {
         return String.format("{ \"_type\": \"%1$s\", " +
                              "\"_id\": %2$s, " +
