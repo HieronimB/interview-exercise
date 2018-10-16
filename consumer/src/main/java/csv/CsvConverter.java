@@ -12,6 +12,7 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class CsvConverter {
+    //obie metody convert wygladaja prawie tak samo, wystarczylo przekazac pierwsza fcje map jako argument do ogolnej metody
     public String convert(List<JsonNode> jsonData, List<String> format) {
         return jsonData.stream()
                 .map(node -> extractFieldsUsingFormatter(node, format))
@@ -22,7 +23,7 @@ public class CsvConverter {
     public String convert(List<JsonNode> jsonData) {
         return jsonData.stream()
                 .map(this::flattenJson)
-                .map(s -> s.collect(Collectors.joining(",")))
+                .map(s -> s.collect(Collectors.joining(","))) // Kod tworzący CSV duplikuje się
                 .collect(Collectors.joining("\n"));
     }
 

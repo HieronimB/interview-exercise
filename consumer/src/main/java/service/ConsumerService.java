@@ -15,14 +15,14 @@ public class ConsumerService {
     private SupplierClient supplierClient;
     private JsonParser jsonParser;
 
-    @Autowired
+    @Autowired // Zbędne, Spring tak czy inaczej wybierze ten konstruktor
     public ConsumerService(SupplierClient supplierClient, JsonParser jsonParser) {
         this.supplierClient = supplierClient;
         this.jsonParser = jsonParser;
     }
 
     public List<JsonNode> getJsonData(int size) {
-        HttpResponse<String> response = supplierClient.get("/generate/json/" + size);
+        HttpResponse<String> response = supplierClient.get("/generate/json/" + size); // Zbędny '/' na początku ścieżki, get() go dokłada
         JsonNode json = jsonParser.parse(response.body());
 
         List<JsonNode> jsonNodes = new ArrayList<>();

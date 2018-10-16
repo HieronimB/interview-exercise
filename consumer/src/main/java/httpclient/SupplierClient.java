@@ -15,7 +15,7 @@ public class SupplierClient {
     private int port;
     private HttpClient httpClient;
 
-    public SupplierClient(@Value("${supplier.host}") String host,@Value("${supplier.port}") int port) {
+    public SupplierClient(@Value("${supplier.host}") String host,@Value("${supplier.port}") int port) { // Brakuje spacji po przecinku
         this.host = host;
         this.port = port;
         this.httpClient = HttpClient.newBuilder().build();
